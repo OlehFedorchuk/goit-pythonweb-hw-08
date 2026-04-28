@@ -86,13 +86,15 @@ README.md
 
 ### Контакти
 
-| Method | Endpoint         | Description       |
-| ------ | ---------------- | ----------------- |
-| POST   | `/contacts/`     | Create contact    |
-| GET    | `/contacts/`     | Get all contacts  |
-| GET    | `/contacts/{id}` | Get contact by id |
-| PUT    | `/contacts/{id}` | Update contact    |
-| DELETE | `/contacts/{id}` | Delete contact    |
+| Method | Endpoint                       | Description        |
+| ------ | ------------------------------ | ------------------ |
+| POST   | `/contacts/`                   | Create contact     |
+| GET    | `/contacts/`                   | Get all contacts   |
+| GET    | `/contacts/{contact_id}`       | Get contact by id  |
+| PUT    | `/contacts/{contact_id}`       | Update contact     |
+| DELETE | `/contacts/{contact_id}`       | Delete contact     |
+| GET    | `/contacts/{contact_id}`       | Search contact     |
+| GET    | `/contacts/birthdays/upcoming` | Upcoming Birthdays |
 
 ---
 

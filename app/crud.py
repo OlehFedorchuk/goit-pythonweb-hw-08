@@ -24,21 +24,6 @@ def search(db: Session, q: str):
     ).all()
 
 
-def birthdays(db: Session):
-    today = date.today()
-    return db.query(Contact).filter(
-        Contact.birthday.between(today, today + timedelta(days=7))
-    ).all()
-
-def delete_contact(db: Session, contact_id: int):
-    contact = db.query(Contact).filter(Contact.id == contact_id).first()
-
-    if contact:
-        db.delete(contact)
-        db.commit()
-
-    return contact
-
 def update_contact(db: Session, contact_id: int, contact_data):
 
     contact = db.query(Contact).filter(Contact.id == contact_id).first()
@@ -75,3 +60,12 @@ def get_upcoming_birthdays(db: Session):
         if today <= birthday_this_year <= next_week:
             upcoming.append(contact)
     return upcoming
+
+def delete_contact(db: Session, contact_id: int):
+    contact = db.query(Contact).filter(Contact.id == contact_id).first()
+
+    if contact:
+        db.delete(contact)
+        db.commit()
+
+    return contact

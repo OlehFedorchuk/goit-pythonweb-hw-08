@@ -30,22 +30,19 @@ def search(q: str, db: Session = Depends(get_db)):
     return crud.search(db, q)
 
 
-@router.get("/birthdays/")
-def birthdays(db: Session = Depends(get_db)):
-    return crud.birthdays(db)
+@router.get("/{contact_id}", response_model=ContactResponse)
+def get_contact(contact_id: int, db: Session = Depends(get_db)):
+    contact = crud.get_contact_by_id(db, contact_id)
 
-@router.delete("/{contact_id}")
-
-def delete_contact(contact_id: int, db: Session = Depends(get_db)):
-    contact = crud.delete_contact(db, contact_id)
     if contact is None:
-        raise HTTPException(status_code=404, detail="Contact not found")
-    return {"message": "Contact deleted successfully"}
-
+        raise HTTPException(
+            status_code=404,
+            detail="Contact not found"
+        )
+    return contact
 
 
 @router.put("/{contact_id}", response_model=ContactResponse)
-
 def update_contact(
     contact_id: int,
     contact_data: ContactCreate,
@@ -56,17 +53,15 @@ def update_contact(
         raise HTTPException(status_code=404, detail="Contact not found")
     return contact
 
-@router.get("/{contact_id}", response_model=ContactResponse)
-def get_contact(contact_id: int, db: Session = Depends(get_db)):
-    contact = crud.get_contact_by_id(db, contact_id)
 
-    if contact is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Contact not found"
-        )
-
-    return contact
 @router.get("/birthdays/upcoming", response_model=list[ContactResponse])
 def upcoming_birthdays(db: Session = Depends(get_db)):
     return crud.get_upcoming_birthdays(db)
+
+
+@router.delete("/{contact_id}")
+def delete_contact(contact_id: int, db: Session = Depends(get_db)):
+    contact = crud.delete_contact(db, contact_id)
+    if contact is None:
+        raise HTTPException(status_code=404, detail="Contact not found")
+    return {"message": "Contact deleted successfully"}
