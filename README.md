@@ -59,34 +59,6 @@ http://localhost:8000/docs
 
 ---
 
-## Запуск локально через Poetry
-
-### Встановити залежності
-
-```bash
-poetry install
-```
-
-### Активувати shell
-
-```bash
-poetry shell
-```
-
-### Запустити міграції
-
-```bash
-alembic upgrade head
-```
-
-### Запустити сервер
-
-```bash
-uvicorn app.main:app --reload
-```
-
----
-
 ## Структура проєкту
 
 ```bash
