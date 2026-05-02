@@ -12,8 +12,24 @@ def create_contact(db: Session, contact: ContactCreate):
     return obj
 
 
-def get_contacts(db: Session):
-    return db.query(Contact).all()
+def get_contacts(
+    db: Session,
+    first_name: str = None,
+    last_name: str = None,
+    email: str = None
+):
+    query = db.query(Contact)
+
+    if first_name:
+        query = query.filter(Contact.first_name.ilike(f"%{first_name}%"))
+
+    if last_name:
+        query = query.filter(Contact.last_name.ilike(f"%{last_name}%"))
+
+    if email:
+        query = query.filter(Contact.email.ilike(f"%{email}%"))
+
+    return query.all()
 
 
 def search(db: Session, q: str):

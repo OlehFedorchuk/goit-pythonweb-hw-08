@@ -4,6 +4,8 @@ from app.database import SessionLocal
 import app.crud as crud
 import app.schemas as schemas
 from app.schemas import ContactCreate, ContactResponse
+from typing import Optional
+from typing import Optional
 
 router = APIRouter(prefix="/contacts", tags=["contacts"])
 
@@ -21,13 +23,13 @@ def create(contact: schemas.ContactCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/", response_model=list[schemas.ContactResponse])
-def all(db: Session = Depends(get_db)):
-    return crud.get_contacts(db)
-
-
-@router.get("/search/")
-def search(q: str, db: Session = Depends(get_db)):
-    return crud.search(db, q)
+def all(
+    first_name: Optional[str] = None,
+    last_name: Optional[str] = None,
+    email: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    return crud.get_contacts(db, first_name, last_name, email)
 
 
 @router.get("/{contact_id}", response_model=ContactResponse)
